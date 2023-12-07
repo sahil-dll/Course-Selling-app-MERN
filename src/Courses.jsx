@@ -1,12 +1,12 @@
 import { useDebugValue, useEffect, useState } from "react";
 import Card from "@mui/material/Card";
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 function Courses() {
   const [courses, setCourses] = useState([]);
   useEffect(() => {
     function callback2(data) {
       setCourses(data.courses);
-      //   console.log(data);
     }
     function callback1(res) {
       res.json().then(callback2);
@@ -22,12 +22,13 @@ function Courses() {
     <div
       style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
       {courses.map((course) => (
-        <Course course={course}></Course>
+        <Course key={course._id} course={course} />
       ))}
     </div>
   );
 }
-export function Course(props) {
+export function Course({ course }) {
+  const navigate = useNavigate();
   return (
     <Card
       style={{
@@ -37,10 +38,20 @@ export function Course(props) {
         minHeight: 200,
       }}>
       <Typography variant="h5" textAlign={"center"}>
-        {props.course.title}
+        {course.title}
       </Typography>
-      <Typography variant="subtitle1">{props.course.description}</Typography>
-      <img src={props.course.image} style={{ minWidth: 300 }}></img>
+      <Typography variant="subtitle1">{course.description}</Typography>
+      <img src={course.image} style={{ minWidth: 300 }}></img>
+      <div style={{ display: "flex", justifyContent: "center", marginTop: 20 }}>
+        <Button
+          variant="contained"
+          size="large"
+          onClick={() => {
+            navigate("/course/" + course._id);
+          }}>
+          Edit
+        </Button>
+      </div>
     </Card>
   );
 }

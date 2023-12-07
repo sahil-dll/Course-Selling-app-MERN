@@ -3,11 +3,13 @@ import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useState } from "react";
+import axios from "axios";
 
 function Addcourse() {
-  const [title, setTitle] = useState();
-  const [description, setDescription] = useState();
-  const [image, setImage] = useState([]);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [image, setImage] = useState("");
+  const [price, setPrice] = useState(0);
   return (
     <>
       <div>
@@ -37,29 +39,33 @@ function Addcourse() {
                 setImage(e.target.value);
               }}
             />
+            <TextField
+              fullWidth
+              label="Price"
+              variant="outlined"
+              onChange={(p) => {
+                setPrice(p.target.value);
+              }}
+            />
             <Button
               variant="contained"
-              onClick={() => {
-                function callback2(data) {
-                  alert("course added");
-                }
-                function callback1(res) {
-                  res.json().then(callback2);
-                }
-
-                fetch("http://localhost:3000/admin/courses", {
-                  method: "POST",
-                  body: JSON.stringify({
+              onClick={async () => {
+                await axios.post(
+                  "http://localhost:3000/admin/courses",
+                  {
                     title: title,
                     description: description,
                     image: image,
                     published: true,
-                  }),
-                  headers: {
-                    "Content-type": "application/json",
-                    Authorization: "Bearer " + localStorage.getItem("token"),
+                    price: price,
                   },
-                }).then(callback1);
+                  {
+                    headers: {
+                      Authorization: "Bearer " + localStorage.getItem("token"),
+                    },
+                  }
+                );
+                alert("ADMIN COURSE CREATED !");
               }}>
               Add course
             </Button>

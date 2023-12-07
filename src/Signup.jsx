@@ -3,10 +3,10 @@ import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useState } from "react";
-
+import axios from "axios";
 function Signup() {
   const [email, setEmail] = useState();
-  const [passwords, setPassword] = useState();
+  const [password, setPassword] = useState();
   return (
     <>
       <div>
@@ -43,26 +43,17 @@ function Signup() {
             <br></br>
             <Button
               variant="contained"
-              onClick={() => {
-                function callback2(data) {
-                  // console.log(data);
-                  localStorage.setItem("token", data.token);
-                  window.location = "/";
-                }
-                function callback1(res) {
-                  res.json().then(callback2);
-                }
-
-                fetch("http://localhost:3000/admin/signup", {
-                  method: "POST",
-                  body: JSON.stringify({
+              onClick={async () => {
+                const response = await axios.post(
+                  "http://localhost:3000/admin/signup",
+                  {
                     username: email,
-                    password: passwords,
-                  }),
-                  headers: {
-                    "Content-type": "application/json",
-                  },
-                }).then(callback1);
+                    password: password,
+                  }
+                );
+                let data = response.data;
+                localStorage.setItem("token", data.token);
+                window.location = "/";
               }}>
               SignUp
             </Button>

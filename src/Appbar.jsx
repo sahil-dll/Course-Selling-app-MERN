@@ -37,8 +37,23 @@ function Appbar() {
           <Typography>Coursera</Typography>
         </div>
         <div style={{ display: "flex" }}>
-          <div>{userEmail}</div>
-          <div style={{ marginRight: 10 }}>
+          <div style={{ marginRight: 10, display: "flex" }}>
+            <div style={{ marginRight: 10 }}>
+              <Button
+                onClick={() => {
+                  navigate("/addcourse");
+                }}>
+                Add Course
+              </Button>
+            </div>
+            <div style={{ marginRight: 10 }}>
+              <Button
+                onClick={() => {
+                  navigate("/courses");
+                }}>
+                Courses
+              </Button>
+            </div>
             <Button
               variant="contained"
               onClick={() => {

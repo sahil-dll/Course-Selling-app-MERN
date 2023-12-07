@@ -5,6 +5,7 @@ import AppBar from "./Appbar.jsx";
 import Addcourse from "./Addcourse.jsx";
 import Courses from "./Courses.jsx";
 import Course from "./course.jsx";
+import axios from "axios";
 import {
   RecoilRoot,
   atom,
