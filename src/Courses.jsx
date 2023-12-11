@@ -41,7 +41,7 @@ export function Course({ course }) {
         {course.title}
       </Typography>
       <Typography variant="subtitle1">{course.description}</Typography>
-      <img src={course.image} style={{ minWidth: 300 }}></img>
+      <img src={course.imageLink} style={{ minWidth: 300 }}></img>
       <div style={{ display: "flex", justifyContent: "center", marginTop: 20 }}>
         <Button
           variant="contained"
